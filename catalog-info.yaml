@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: interview-backend
+  description: "Candidate interview assignment for an Software Engineer"
+  tags:
+    - "go"
+    - "interview"
+    - "backend"
+  annotations:
+    github.com/project-slug: coopnorge/interview-backend
+spec:
+  type: library
+  lifecycle: experimental
+  owner: engineering

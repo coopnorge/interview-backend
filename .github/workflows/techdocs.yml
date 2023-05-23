@@ -1,0 +1,35 @@
+name: TechDocs
+on:
+  push: {}
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      docs: ${{ steps.filter.outputs.docs }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            docs:
+              - 'docs/**'
+  techdocs:
+    name: "TechDocs"
+    needs: changes
+    if: ${{ needs.changes.outputs.docs == 'true' }}
+    permissions:
+      contents: read
+      id-token: write
+      packages: read
+    uses: coopnorge/github-workflow-techdocs/.github/workflows/techdocs.yaml@v0
+  build:
+    needs:
+      - techdocs
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+        name: "Catch errors"
+        if: |
+          needs.techdocs.result == 'failure'
