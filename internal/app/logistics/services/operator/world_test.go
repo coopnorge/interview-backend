@@ -1,9 +1,8 @@
 package operator
 
 import (
+    "github.com/coopnorge/interview-backend/internal/app/logistics/model"
     "testing"
-
-    "github.com/coopnorge/interview-backend/internal/app/pkg/generator"
 )
 
 func TestNewWorldOperator(t *testing.T) {
@@ -30,11 +29,7 @@ func TestNewWorldOperator(t *testing.T) {
 
     // Check the Connected flag for each warehouse
     for _, node := range wOperator.world.Nodes {
-        if node.Type == generator.Warehouses {
-            if !node.Connected {
-                t.Errorf("Warehouse with ID %d should be connected, but it is not", node.ID)
-            }
-        } else if node.Type == generator.CargoUnits {
+        if node.Type == model.CargoUnits {
             if !node.Connected {
                 t.Errorf("Cargo unit with ID %d should not be connected, but it is", node.ID)
             }

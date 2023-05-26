@@ -4,10 +4,12 @@ import (
     "context"
     "errors"
     "fmt"
+    "github.com/coopnorge/interview-backend/internal/app/pkg/printer"
     "log"
     "math/rand"
     "os"
     "os/signal"
+    "strconv"
     "sync"
     "syscall"
     "time"
@@ -16,7 +18,6 @@ import (
     "github.com/coopnorge/interview-backend/internal/app/logistics/model"
     "github.com/coopnorge/interview-backend/internal/app/logistics/services/client"
     "github.com/coopnorge/interview-backend/internal/app/logistics/services/operator"
-    "github.com/coopnorge/interview-backend/internal/app/pkg/generator"
 )
 
 const (
@@ -34,6 +35,10 @@ type ServiceInstance struct {
 
     logisticsClient *client.APILogisticsClient
     worldOperator   *operator.WorldOperator
+
+    maxMoveWaitNumber int
+    reportTable       *printer.ASCIITablePrinter
+    statistics        *model.Statistics
 }
 
 // NewServiceInstance constructor
@@ -41,9 +46,10 @@ func NewServiceInstance(lc *client.APILogisticsClient, wo *operator.WorldOperato
     log.Printf("%s, initializing...\n", appName)
 
     serviceCtx, serviceCtxCancel := context.WithCancel(context.Background())
-    connCtx, connCtxCancel := context.WithTimeout(serviceCtx, 10*time.Second)
+    connCtx, connCtxCancel := context.WithTimeout(serviceCtx, 30*time.Second)
     defer connCtxCancel()
 
+    log.Printf("%s, trying to connect to API - %s...\n", appName, apiAddress)
     if connErr := lc.Connect(apiAddress, connCtx); connErr != nil {
         serviceCtxCancel()
         err := errors.New(fmt.Sprintf(
@@ -62,8 +68,19 @@ func NewServiceInstance(lc *client.APILogisticsClient, wo *operator.WorldOperato
 
         logisticsClient: lc,
         worldOperator:   wo,
+
+        maxMoveWaitNumber: 100,
+        reportTable:       printer.NewASCIITablePrinter(),
+        statistics: &model.Statistics{
+            ExecTime: time.Now(),
+            Operation: []*model.Operation{
+                {Name: "MoveUnit"},
+                {Name: "UnitReachedWarehouse"},
+            },
+        },
     }
 
+    service.reportTable.AddHeader([]string{"Operation", "Count", "Errors"})
     worldPopulationErr := wo.Populate(
         uint32(rand.Intn(maxWarehouses-10+1)+10),
         uint32(rand.Intn(maxCargoUnits-10+1)+10),
@@ -127,20 +144,36 @@ func (s *ServiceInstance) Run() error {
         wg.Wait()
     }
 
+    for _, o := range s.statistics.Operation {
+        s.reportTable.AddRow([]string{
+            o.Name,
+            strconv.FormatUint(o.A, 10),
+            strconv.FormatUint(o.B, 10),
+        })
+    }
+
+    fmt.Println("Execution time:", time.Since(s.statistics.ExecTime))
+    fmt.Println(s.reportTable)
+
     return nil
 }
 
 func (s *ServiceInstance) processDelivery(unit *model.GraphNode, wg *sync.WaitGroup) {
     defer wg.Done()
 
-    time.Sleep(30 * time.Millisecond)
+    time.Sleep(time.Duration(s.maxMoveWaitNumber) * time.Microsecond)
+    s.maxMoveWaitNumber = rand.Intn(s.maxMoveWaitNumber+1) + 1
+    if s.maxMoveWaitNumber >= 1 {
+        s.maxMoveWaitNumber = s.maxMoveWaitNumber >> 1
+    }
 
     oldCoordinate := *unit.Coordinate
-    newCoordinate := s.worldOperator.MoveDeliveryUniToNearestWarehouse(unit.ID)
+    newCoordinate := s.worldOperator.MoveDeliveryUnitToNearestWarehouse(unit.ID)
     unitMessage := fmt.Sprintf("%s moving to - X:%d, Y:%d", unit.Name, newCoordinate.X, newCoordinate.Y)
 
     log.Println(unitMessage)
 
+    s.statistics.Operation[0].AddA()
     moveErr := s.logisticsClient.MoveUnit(
         s.ctx,
         &api.MoveUnitRequest{
@@ -153,18 +186,21 @@ func (s *ServiceInstance) processDelivery(unit *model.GraphNode, wg *sync.WaitGr
     )
     if moveErr != nil {
         log.Printf("filed to send MoveUnit %s, API error: %v\n", unitMessage, moveErr)
+        s.statistics.Operation[0].AddB()
+
         return
     } else if newCoordinate != oldCoordinate {
         return
     }
 
     announcement := fmt.Sprintf("%s - Reached Objective.", unitMessage)
-    warehouse := s.worldOperator.FindEntityByCoordinate(newCoordinate, generator.Warehouses)
+    warehouse := s.worldOperator.FindEntityByCoordinate(newCoordinate, model.Warehouses)
     if warehouse == nil {
         log.Printf("Warehouses not found in coordinates X:%d Y:%d", newCoordinate.X, newCoordinate.Y)
         return
     }
 
+    s.statistics.Operation[1].AddA()
     reachErr := s.logisticsClient.UnitReachedWarehouse(
         s.ctx,
         &api.UnitReachedWarehouseRequest{
@@ -178,6 +214,7 @@ func (s *ServiceInstance) processDelivery(unit *model.GraphNode, wg *sync.WaitGr
     )
     if reachErr != nil {
         log.Printf("filed to send UnitReachedWarehouse %s, API error: %v\n", unitMessage, moveErr)
+        s.statistics.Operation[1].AddB()
         return
     }
 

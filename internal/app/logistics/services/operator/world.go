@@ -30,15 +30,15 @@ func (wo *WorldOperator) Populate(maxWarehouses, maxCargoUnits uint32) error {
         return errors.New("world actor count overflow")
     }
 
-    generator.AddNewActors(generator.Warehouses, wo.world, uint(maxWarehouses), 0)
-    generator.AddNewActors(generator.CargoUnits, wo.world, uint(maxCargoUnits), uint(maxWarehouses))
+    generator.AddNewActors(model.Warehouses, wo.world, uint(maxWarehouses), 0)
+    generator.AddNewActors(model.CargoUnits, wo.world, uint(maxCargoUnits), uint(maxWarehouses))
 
     var warehouseIDs []uint
     var deliveryUnitIDs []uint
     for _, node := range wo.world.Nodes {
-        if node.Type == generator.Warehouses {
+        if node.Type == model.Warehouses {
             warehouseIDs = append(warehouseIDs, node.ID)
-        } else if node.Type == generator.CargoUnits {
+        } else if node.Type == model.CargoUnits {
             deliveryUnitIDs = append(deliveryUnitIDs, node.ID)
         }
     }
@@ -67,21 +67,21 @@ func (wo *WorldOperator) Populate(maxWarehouses, maxCargoUnits uint32) error {
 
 // GetDeliveryUnit from the world
 func (wo *WorldOperator) GetDeliveryUnit() []*model.GraphNode {
-    return wo.world.GetNodesByType(generator.CargoUnits)
+    return wo.world.GetNodesByType(model.CargoUnits)
 }
 
 // FindEntityByCoordinate in the world
-func (wo *WorldOperator) FindEntityByCoordinate(coordinate model.Coordinate, entityType generator.ActorType) *model.GraphNode {
+func (wo *WorldOperator) FindEntityByCoordinate(coordinate model.Coordinate, entityType model.ActorType) *model.GraphNode {
     return wo.world.FindNodesByLocation(coordinate, entityType)
 }
 
-// MoveDeliveryUniToNearestWarehouse moves the given unit to the nearest connected warehouse based on their X and Y locations
-func (wo *WorldOperator) MoveDeliveryUniToNearestWarehouse(unitID uint) model.Coordinate {
+// MoveDeliveryUnitToNearestWarehouse moves the given unit to the nearest connected warehouse based on their X and Y locations
+func (wo *WorldOperator) MoveDeliveryUnitToNearestWarehouse(unitID uint) model.Coordinate {
     deliveryUnitNode := wo.world.GetNodeByID(unitID)
     unitX := deliveryUnitNode.X
     unitY := deliveryUnitNode.Y
 
-    connectedWarehouses := wo.world.GetConnectedNodes(unitID, generator.Warehouses)
+    connectedWarehouses := wo.world.GetConnectedNodes(unitID, model.Warehouses)
 
     // Initialize variables for tracking the nearest warehouse
     minDistance := math.MaxFloat64
