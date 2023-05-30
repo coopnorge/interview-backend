@@ -12,7 +12,7 @@ services:
   techdocs:
     build:
       context: .
-      dockerfile: internal/techdocs/Dockerfile
+      dockerfile: docker-compose/Dockerfile
       target: techdocs
     working_dir: /srv/workspace
     volumes:
