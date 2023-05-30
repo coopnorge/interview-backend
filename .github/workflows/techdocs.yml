@@ -2,34 +2,28 @@ name: TechDocs
 on:
   push: {}
 jobs:
-  changes:
+  setup:
+    name: Setup
     runs-on: ubuntu-latest
     outputs:
-      docs: ${{ steps.filter.outputs.docs }}
+      run-techdocs-ci: ${{ steps.changes.outputs.techdocs == 'true' && github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v3
       - uses: dorny/paths-filter@v2
-        id: filter
+        id: changes
         with:
+          list-files: json
           filters: |
-            docs:
+            techdocs:
               - 'docs/**'
   techdocs:
-    name: "TechDocs"
-    needs: changes
-    if: ${{ needs.changes.outputs.docs == 'true' }}
+    if: ${{ needs.setup.outputs.run-techdocs-ci == 'true'}}
+    concurrency:
+      group: ${{ github.repository }}-${{ github.workflow }}-techdocs-${{ github.ref }}
+      cancel-in-progress: true
     permissions:
       contents: read
       id-token: write
       packages: read
+    name: TechDocs
     uses: coopnorge/github-workflow-techdocs/.github/workflows/techdocs.yaml@v0
-  build:
-    needs:
-      - techdocs
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - run: exit 1
-        name: "Catch errors"
-        if: |
-          needs.techdocs.result == 'failure'

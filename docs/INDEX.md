@@ -33,7 +33,6 @@ The solution should output a log message to STDOUT once per second with:
 
 - Number of received messages / second.
 
-
 ### Part Two: Store Delivery Units
 
 The cargo units run between the different warehouses in the world.
@@ -54,4 +53,5 @@ The solution should output a log message to STDOUT once per second with:
 
 Given the delivery paths stored in *Part Two*.
 
-Implement an API endpoint that can export data about warehouses and it's suppliers.
+Implement an API endpoint that can export data about warehouses and it's
+suppliers.
