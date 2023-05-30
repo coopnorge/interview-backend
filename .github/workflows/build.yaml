@@ -1,16 +1,41 @@
 on:
-  push: {}
+  push:
+    branches:
+      - main
   pull_request: {}
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+
+env:
+  XDG_CACHE_HOME: ${{ github.workspace }}/.cache/xdg
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Output message
-        run: echo This is a default job to trigger output but it fails
-      - name: Fail when not in template
-        if: ${{ github.repository != 'coopnorge/github-template-default' }}
-        run: exit 1
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+      - uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Go Build
+        run: go build -v ./...
+      - name: Lint Code Base
+        uses: github/super-linter@v5
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_GO: true
+          DEFAULT_BRANCH: main
+          FILTER_REGEX_EXCLUDE: .*vendor/.*
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Unit Test with Race
+        run: |
+          go test -v --race $(go list ./... | (grep -v /vendor/))

@@ -10,9 +10,9 @@
 Coop Logistics Engine, simulates several cargo units that
 deliver goods between different warehouses in the world.
 
-Coop Logistics Engine *executable* Docker image: // TODO Add it
-
-The executable sends `gRPC` requests to `127.0.0.1:50051`.
+Coop Logistics Engine sends `gRPC` requests to `127.0.0.1:50051`.
+Checkout service in
+[docker-compose](Dockerfile) "interview_backend_coop_logistics"
 
 ## Assignment Details
 

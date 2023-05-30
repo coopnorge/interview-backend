@@ -4,7 +4,6 @@ import (
     "context"
     "errors"
     "fmt"
-    "github.com/coopnorge/interview-backend/internal/app/pkg/printer"
     "log"
     "math/rand"
     "os"
@@ -18,6 +17,7 @@ import (
     "github.com/coopnorge/interview-backend/internal/app/logistics/model"
     "github.com/coopnorge/interview-backend/internal/app/logistics/services/client"
     "github.com/coopnorge/interview-backend/internal/app/logistics/services/operator"
+    "github.com/coopnorge/interview-backend/internal/app/pkg/printer"
 )
 
 const (

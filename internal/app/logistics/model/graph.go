@@ -1,9 +1,12 @@
 package model
 
+import "sync"
+
 // Graph model
 type Graph struct {
     Nodes []GraphNode
     Edges []GraphEdge
+    sync.Mutex
 }
 
 // GraphNode ...
@@ -29,11 +32,17 @@ func NewGraph() *Graph {
 
 // AddNode to the graph
 func (g *Graph) AddNode(node GraphNode) {
+    g.Lock()
+    defer g.Unlock()
+
     g.Nodes = append(g.Nodes, node)
 }
 
 // AddEdge to the graph
 func (g *Graph) AddEdge(edge GraphEdge) {
+    g.Lock()
+    defer g.Unlock()
+
     g.Edges = append(g.Edges, edge)
 
     for i := range g.Nodes {
