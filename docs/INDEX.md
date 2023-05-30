@@ -10,14 +10,14 @@
 Coop Logistics Engine, simulates several cargo units that
 deliver goods between different warehouses in the world.
 
-Coop Logistics Engine sends `gRPC` requests to `127.0.0.1:50051`.
-Checkout service in
-[docker-compose](Dockerfile) "interview_backend_coop_logistics"
+Coop Logistics Engine sends `gRPC` requests to `127.0.0.1:50051`,
+checkout service in
+[docker-compose](../Dockerfile) "interview_backend_coop_logistics"
 
 ## Assignment Details
 
 Develop an API system that matches the criteria described in parts,
-here is [Swagger documentation with descriptions.](api/logistics.swagger.json)
+here is [Swagger documentation with descriptions.](../api/logistics.swagger.json)
 
 Don't hesitate to ask questions for clarification if you have them.
 
@@ -27,7 +27,7 @@ ___
 ### Part One: Implement Backend API
 
 Your first task is to implement API server
-for that [proto-file](api/v1/logistics.proto).
+for that [proto-file](../api/v1/logistics.proto).
 
 The solution should output a log message to STDOUT once per second with:
 
