@@ -4,7 +4,6 @@ go 1.20
 
 require (
 	github.com/brianvoe/gofakeit/v6 v6.21.0
-	github.com/davecgh/go-spew v1.1.1
 	github.com/google/wire v0.5.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
 	google.golang.org/genproto v0.0.0-20230524185152-1884fd1fac28
