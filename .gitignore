@@ -4,6 +4,7 @@
 node_modules/
 .DS_STORE
 vendor
+mkdocs.yml
 
 cmd/logistics/logistics
 cmd/logistics/coop_logistics
