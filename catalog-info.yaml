@@ -9,6 +9,7 @@ metadata:
     - "interview"
     - "engineering"
   annotations:
+    backstage.io/techdocs-ref: dir:.
     github.com/project-slug: coopnorge/interview-backend
 spec:
   type: library
