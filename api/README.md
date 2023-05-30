@@ -5,7 +5,7 @@ Make sure you have before:
 - [Go](https://go.dev/doc/install)
 - [Buf for proto-files management](https://buf.build/docs/installation)
 
-Check make file in root of the project for compiling go code from proto-files.
+Check the `Makefile` in root of the project for compiling go code from proto-files.
 
 ## Protobuf generated files
 
