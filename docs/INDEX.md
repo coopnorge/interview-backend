@@ -12,7 +12,7 @@ deliver goods between different warehouses in the world.
 
 Coop Logistics Engine sends `gRPC` requests to `127.0.0.1:50051`,
 checkout service in
-[docker-compose](../Dockerfile) "interview_backend_coop_logistics"
+[docker-compose](../docker-compose.yml) "interview_backend_coop_logistics"
 
 ## Assignment Details
 
