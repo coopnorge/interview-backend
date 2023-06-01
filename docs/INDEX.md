@@ -31,7 +31,7 @@ ___
 
 ### Part One: Implement Backend API
 
-Implement the API server for that
+Implement an API sever that provides the following service over gRPC: 
 [proto-file](../api/v1/logistics.proto).
 
 - The solution should output a log message to STDOUT
