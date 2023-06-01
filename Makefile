@@ -12,7 +12,5 @@ endif
 
 .PHONY: init
 init:
-	rm -f api/logistics.swagger.json
 	rm -rf internal/app/logistics/api/v1
 	buf generate
-	mv internal/app/logistics/api/v1/logistics.swagger.json api/

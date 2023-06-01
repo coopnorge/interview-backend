@@ -19,5 +19,3 @@ plugins:
     opt:
       - paths=import
       - module=github.com/coopnorge/interview-backend/internal/app/logistics/api
-  - name: openapiv2
-    out: internal/app/logistics/api/

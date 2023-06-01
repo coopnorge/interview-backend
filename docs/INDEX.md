@@ -20,18 +20,16 @@ look at service in
 ## Assignment
 
 The result of this task should be an API system that fulfils the criteria
-described in three parts below. Here is the link to the API documentation
-[Swagger documentation](../api/logistics.swagger.json)
-or [Protofile](../api/v1/logistics.proto) with descriptions.
+described in three parts below.
 
-Don't hesitate to ask questions for clarification if you have them.
+*Don't hesitate to ask questions for clarification if you have them.*
 
-*Good luck and we hope you will have fun!*
+**Good luck and we hope you will have fun!**
 ___
 
 ### Part One: Implement Backend API
 
-Implement an API sever that provides the following service over gRPC: 
+Implement an API sever that provides the following service over gRPC:
 [proto-file](../api/v1/logistics.proto).
 
 - The solution should output a log message to STDOUT
