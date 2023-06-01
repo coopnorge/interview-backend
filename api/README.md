@@ -1,6 +1,6 @@
 # Contribute instructions
 
-Make sure you have before:
+Prerequisites:
 
 - [Go](https://go.dev/doc/install)
 - [Buf for proto-files management](https://buf.build/docs/installation)
