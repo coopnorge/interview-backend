@@ -24,8 +24,8 @@ const (
     appName    = "Coop Logistics Engine"
     apiAddress = "127.0.0.1:50051" // TODO Improve later to use CMD ARGs
 
-    maxWarehouses = 1<<8 - 1
-    maxCargoUnits = 1 << 10
+    maxWarehouses = 1<<8-1
+    maxCargoUnits = 1<<10
 )
 
 // ServiceInstance of application
@@ -179,8 +179,8 @@ func (s *ServiceInstance) processDelivery(unit *model.GraphNode, wg *sync.WaitGr
         &api.MoveUnitRequest{
             CargoUnitId: int64(unit.ID),
             Location: &api.Location{
-                X: int64(newCoordinate.X),
-                Y: int64(newCoordinate.Y),
+                X: uint32(newCoordinate.X),
+                Y: uint32(newCoordinate.Y),
             },
         },
     )
@@ -204,7 +204,7 @@ func (s *ServiceInstance) processDelivery(unit *model.GraphNode, wg *sync.WaitGr
     reachErr := s.logisticsClient.UnitReachedWarehouse(
         s.ctx,
         &api.UnitReachedWarehouseRequest{
-            Location: &api.Location{X: int64(newCoordinate.X), Y: int64(newCoordinate.Y)},
+            Location: &api.Location{X: uint32(newCoordinate.X), Y: uint32(newCoordinate.Y)},
             Announcement: &api.WarehouseAnnouncement{
                 CargoUnitId: int64(unit.ID),
                 WarehouseId: int64(warehouse.ID),

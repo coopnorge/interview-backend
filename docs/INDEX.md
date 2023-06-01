@@ -1,23 +1,28 @@
 # Interview Assignment - Coop Logistics API
 
+**Implement Server side part that can handle client requests
+with specific business logic.**
+
 ## Acceptance Criteria
 
-- All three parts must be done (One, Two, Three).
+- All three parts must be done.
 - API must be sustainable to handle requests without dropping them.
 
 ## Assignment Appendix
 
-Coop Logistics Engine, simulates several cargo units that
+Coop Logistics Engine simulates several cargo units that
 deliver goods between different warehouses in the world.
 
-Coop Logistics Engine sends `gRPC` requests to `127.0.0.1:50051`,
-checkout service in
+It sends `gRPC` requests to `127.0.0.1:50051`,
+look at service in
 [docker-compose](../docker-compose.yml) "interview_backend_coop_logistics"
 
-## Assignment Details
+## Assignment
 
-Develop an API system that matches the criteria described in parts,
-here is [Swagger documentation with descriptions.](../api/logistics.swagger.json)
+The result of this task should be an API system that fulfils the criteria
+described in three parts below. Here is the link to the API documentation
+[Swagger documentation](../api/logistics.swagger.json)
+or [Protofile](../api/v1/logistics.proto) with descriptions.
 
 Don't hesitate to ask questions for clarification if you have them.
 
@@ -26,12 +31,11 @@ ___
 
 ### Part One: Implement Backend API
 
-Your first task is to implement API server
-for that [proto-file](../api/v1/logistics.proto).
+Implement the API server for that
+[proto-file](../api/v1/logistics.proto).
 
-The solution should output a log message to STDOUT once per second with:
-
-- Number of received messages / second.
+- The solution should output a log message to STDOUT
+once per second with the number of received messages per second.
 
 ### Part Two: Store Delivery Units
 
@@ -43,10 +47,12 @@ Write at least one unit test that verifies that your solution works.
 
 The solution should output a log message to STDOUT once per second with:
 
-- Number of received messages / second.
-- Write summary
+The solution should:
+- Output a log message to STDOUT once per second
+  with the number of received messages per second.
+- Output summary
   - Total delivery units.
-  - Warehouses that has been supplied.
+  - Warehouses that has been supplied (units reached destination).
   - How many delivery units have warehouses.
 
 ### Part Three: Export Delivery Paths

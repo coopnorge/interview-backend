@@ -89,11 +89,11 @@
       "type": "object",
       "properties": {
         "x": {
-          "type": "string",
+          "type": "integer",
           "format": "int64"
         },
         "y": {
-          "type": "string",
+          "type": "integer",
           "format": "int64"
         }
       },
