@@ -6,7 +6,7 @@ with specific business logic.**
 ## Acceptance Criteria
 
 - All three parts must be done.
-- API must be sustainable to handle requests without dropping them.
+- API must be capable of handling all requests sent by this client without dropping them.
 
 ## Assignment Appendix
 
