@@ -43,7 +43,6 @@ Your task is to store these delivery paths,
 data comes into the API you implemented in *Part One*.
 Write at least one unit test that verifies that your solution works.
 
-The solution should output a log message to STDOUT once per second with:
 
 The solution should:
 - Output a log message to STDOUT once per second
