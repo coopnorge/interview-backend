@@ -3,7 +3,7 @@
 The test assignment for a Software Engineer
 -> [instructions](docs/INDEX.md).
 
-Example of output:
+Example of client program output:
 
 ```text
 2023/06/02 10:10:55 CargoUnit: Ferrari -  650ci Convertible moving to - Latitude:113, Longitude:31
