@@ -24,8 +24,8 @@ const (
     appName    = "Coop Logistics Engine"
     apiAddress = "127.0.0.1:50051" // TODO Improve later to use CMD ARGs
 
-    maxWarehouses = 1<<8-1
-    maxCargoUnits = 1<<10
+    maxWarehouses = 1<<8 - 1
+    maxCargoUnits = 1 << 10
 )
 
 // ServiceInstance of application
@@ -152,7 +152,7 @@ func (s *ServiceInstance) Run() error {
         })
     }
 
-    fmt.Println("Execution time:", time.Since(s.statistics.ExecTime))
+    fmt.Println("\nExecution time:", time.Since(s.statistics.ExecTime))
     fmt.Println(s.reportTable)
 
     return nil
@@ -169,7 +169,7 @@ func (s *ServiceInstance) processDelivery(unit *model.GraphNode, wg *sync.WaitGr
 
     oldCoordinate := *unit.Coordinate
     newCoordinate := s.worldOperator.MoveDeliveryUnitToNearestWarehouse(unit.ID)
-    unitMessage := fmt.Sprintf("%s moving to - X:%d, Y:%d", unit.Name, newCoordinate.X, newCoordinate.Y)
+    unitMessage := fmt.Sprintf("%s moving to - Latitude:%d, Longitude:%d", unit.Name, newCoordinate.X, newCoordinate.Y)
 
     log.Println(unitMessage)
 
@@ -179,8 +179,8 @@ func (s *ServiceInstance) processDelivery(unit *model.GraphNode, wg *sync.WaitGr
         &api.MoveUnitRequest{
             CargoUnitId: int64(unit.ID),
             Location: &api.Location{
-                X: uint32(newCoordinate.X),
-                Y: uint32(newCoordinate.Y),
+                Latitude:  uint32(newCoordinate.X),
+                Longitude: uint32(newCoordinate.Y),
             },
         },
     )
@@ -196,7 +196,7 @@ func (s *ServiceInstance) processDelivery(unit *model.GraphNode, wg *sync.WaitGr
     announcement := fmt.Sprintf("%s - Reached Objective.", unitMessage)
     warehouse := s.worldOperator.FindEntityByCoordinate(newCoordinate, model.Warehouses)
     if warehouse == nil {
-        log.Printf("Warehouses not found in coordinates X:%d Y:%d", newCoordinate.X, newCoordinate.Y)
+        log.Printf("Warehouses not found in coordinates Latitude:%d Longitude:%d", newCoordinate.X, newCoordinate.Y)
         return
     }
 
@@ -204,7 +204,7 @@ func (s *ServiceInstance) processDelivery(unit *model.GraphNode, wg *sync.WaitGr
     reachErr := s.logisticsClient.UnitReachedWarehouse(
         s.ctx,
         &api.UnitReachedWarehouseRequest{
-            Location: &api.Location{X: uint32(newCoordinate.X), Y: uint32(newCoordinate.Y)},
+            Location: &api.Location{Latitude: uint32(newCoordinate.X), Longitude: uint32(newCoordinate.Y)},
             Announcement: &api.WarehouseAnnouncement{
                 CargoUnitId: int64(unit.ID),
                 WarehouseId: int64(warehouse.ID),

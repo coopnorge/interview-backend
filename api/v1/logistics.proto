@@ -74,6 +74,6 @@ message WarehouseAnnouncement {
 
 // Location where entity now located in X,Y Axis
 message Location {
-    uint32 x = 1;
-    uint32 y = 2;
+    uint32 Latitude = 1;
+    uint32 Longitude = 2;
 }
