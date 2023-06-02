@@ -7,6 +7,7 @@ package main
 
 import (
     "github.com/coopnorge/interview-backend/internal/app/logistics"
+    "github.com/coopnorge/interview-backend/internal/app/logistics/config"
     "github.com/coopnorge/interview-backend/internal/app/logistics/services/client"
     "github.com/coopnorge/interview-backend/internal/app/logistics/services/operator"
 
@@ -14,7 +15,7 @@ import (
 )
 
 // newWire create new DI
-func newWire() (*logistics.ServiceInstance, func(), error) {
+func newWire(cfg *config.ClientAppConfig) (*logistics.ServiceInstance, func(), error) {
     panic(wire.Build(
         client.ServiceSetForClient,
         operator.ServiceSetForOperator,

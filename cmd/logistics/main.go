@@ -1,7 +1,18 @@
 package main
 
+import (
+    "log"
+
+    "github.com/coopnorge/interview-backend/internal/app/logistics/config"
+)
+
 func main() {
-    app, cleanup, err := newWire()
+    cfg := &config.ClientAppConfig{}
+    cfg.LoadFromEnv()
+
+    log.Println("Loaded Configuration from Environment Variables\n", cfg)
+
+    app, cleanup, err := newWire(cfg)
     if err != nil {
         panic(err)
     }

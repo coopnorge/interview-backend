@@ -8,6 +8,7 @@ package main
 
 import (
 	"github.com/coopnorge/interview-backend/internal/app/logistics"
+	"github.com/coopnorge/interview-backend/internal/app/logistics/config"
 	"github.com/coopnorge/interview-backend/internal/app/logistics/services/client"
 	"github.com/coopnorge/interview-backend/internal/app/logistics/services/operator"
 )
@@ -15,10 +16,10 @@ import (
 // Injectors from wire.go:
 
 // newWire create new DI
-func newWire() (*logistics.ServiceInstance, func(), error) {
+func newWire(cfg *config.ClientAppConfig) (*logistics.ServiceInstance, func(), error) {
 	apiLogisticsClient := client.NewLogisticsClient()
 	worldOperator := operator.NewWorldOperator()
-	serviceInstance, err := logistics.NewServiceInstance(apiLogisticsClient, worldOperator)
+	serviceInstance, err := logistics.NewServiceInstance(apiLogisticsClient, worldOperator, cfg)
 	if err != nil {
 		return nil, nil, err
 	}

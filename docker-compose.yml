@@ -1,14 +1,34 @@
 version: "3.7"
 
 services:
-  interview_backend_coop_logistics:
-    build: .
-    container_name: interview_backend_coop_logistics
+  # Place holder for solution
+  interview_backend_coop_logistics_server:
+    # Update path or place Dockerflie of solution
+    # Don't forget in Dockerfile
+    # Port must be exposed, Go compiled and Executed
+    build:
+      context: ./solution
+      dockerfile: Dockerfile
+    container_name: interview_backend_coop_logistics_server
     environment:
-      - APP_PORT=50051
-    tty: true
+      - SERVICE_PORT=50051
     ports:
       - "50051:50051"
+    networks:
+      - coop-norge-interview-network
+  interview_backend_coop_logistics_client:
+    build:
+      context: .
+      dockerfile: docker-compose/Dockerfile-Project
+    container_name: interview_backend_coop_logistics_client
+    environment:
+      - CLIENT_SERVICE_PORT=50051
+      - CLIENT_SERVICE_HOST=interview_backend_coop_logistics_server
+    depends_on:
+      - interview_backend_coop_logistics_server
+    networks:
+      - coop-norge-interview-network
+  # Coop internal documentation
   techdocs:
     build:
       context: .
@@ -25,3 +45,5 @@ services:
 volumes:
   xdg-cache-home: { }
   nothing: { }
+networks:
+  coop-norge-interview-network:

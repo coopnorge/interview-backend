@@ -8,3 +8,6 @@ mkdocs.yml
 
 cmd/logistics/logistics
 cmd/logistics/coop_logistics
+
+# Assigment implementation
+solution

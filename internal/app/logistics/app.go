@@ -14,6 +14,7 @@ import (
     "time"
 
     api "github.com/coopnorge/interview-backend/internal/app/logistics/api/v1"
+    "github.com/coopnorge/interview-backend/internal/app/logistics/config"
     "github.com/coopnorge/interview-backend/internal/app/logistics/model"
     "github.com/coopnorge/interview-backend/internal/app/logistics/services/client"
     "github.com/coopnorge/interview-backend/internal/app/logistics/services/operator"
@@ -21,8 +22,7 @@ import (
 )
 
 const (
-    appName    = "Coop Logistics Engine"
-    apiAddress = "127.0.0.1:50051" // TODO Improve later to use CMD ARGs
+    appName = "Coop Logistics Engine"
 
     maxWarehouses = 1<<8 - 1
     maxCargoUnits = 1 << 10
@@ -42,20 +42,20 @@ type ServiceInstance struct {
 }
 
 // NewServiceInstance constructor
-func NewServiceInstance(lc *client.APILogisticsClient, wo *operator.WorldOperator) (*ServiceInstance, error) {
+func NewServiceInstance(lc *client.APILogisticsClient, wo *operator.WorldOperator, cfg *config.ClientAppConfig) (*ServiceInstance, error) {
     log.Printf("%s, initializing...\n", appName)
 
     serviceCtx, serviceCtxCancel := context.WithCancel(context.Background())
     connCtx, connCtxCancel := context.WithTimeout(serviceCtx, 30*time.Second)
     defer connCtxCancel()
 
-    log.Printf("%s, trying to connect to API - %s...\n", appName, apiAddress)
-    if connErr := lc.Connect(apiAddress, connCtx); connErr != nil {
+    log.Printf("%s, trying to connect to API - %s...\n", appName, cfg.GetCombinedAddress())
+    if connErr := lc.Connect(cfg.GetCombinedAddress(), connCtx); connErr != nil {
         serviceCtxCancel()
         err := errors.New(fmt.Sprintf(
             "%s, failed to connect to API (%s), error: %v",
             appName,
-            apiAddress,
+            cfg.GetCombinedAddress(),
             connErr,
         ))
 
