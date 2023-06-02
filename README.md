@@ -6,18 +6,20 @@ The test assignment for a Software Engineer
 Example of output:
 
 ```text
-2023/05/30 14:01:28 CargoUnit: Hummer - Mark Lt moving to - X:240, Y:227
-2023/05/30 14:01:28 CargoUnit: Skoda - Eclipse moving to - X:240, Y:227 - Reached Objective.
-2023/05/30 14:01:28 CargoUnit: Hummer - Mark Lt moving to - X:240, Y:227
-2023/05/30 14:01:28 CargoUnit: Hummer - Mark Lt moving to - X:240, Y:227 - Reached Objective.
-2023/05/30 14:01:28 All delivery units reached warehouse...
+2023/06/02 10:10:55 CargoUnit: Ferrari -  650ci Convertible moving to - Latitude:113, Longitude:31
+2023/06/02 10:10:55 CargoUnit: Ligier - Milan moving to - Latitude:113, Longitude:30
+2023/06/02 10:10:55 CargoUnit: Koenigsegg - New Beetle Convertible moving to - Latitude:113, Longitude:30 - Reached Objective.
+2023/06/02 10:10:55 CargoUnit: Ferrari -  650ci Convertible moving to - Latitude:113, Longitude:30
+2023/06/02 10:10:55 CargoUnit: Ligier - Milan moving to - Latitude:113, Longitude:30
+2023/06/02 10:10:55 CargoUnit: Ligier - Milan moving to - Latitude:113, Longitude:30 - Reached Objective.
+2023/06/02 10:10:55 CargoUnit: Ferrari -  650ci Convertible moving to - Latitude:113, Longitude:30
+2023/06/02 10:10:56 CargoUnit: Ferrari -  650ci Convertible moving to - Latitude:113, Longitude:30 - Reached Objective.
+2023/06/02 10:10:56 All delivery units reached warehouse...
 
-Execution time: 4.351459346s
-
-| Operation            | Count      | Errors  |
-----------------------------------------------
-| MoveUnit             | 88419      | 0       |
-| UnitReachedWarehouse | 693        | 0       |
-----------------------------------------------
-
+Execution time: 1.202202348s
+| Operation            | Count | Errors |
+-----------------------------------------
+| MoveUnit             | 13324 | 0      |
+| UnitReachedWarehouse | 108   | 0      |
+-----------------------------------------
 ```
