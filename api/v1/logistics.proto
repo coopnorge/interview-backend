@@ -9,14 +9,6 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 // Service
 // ---------------------------------------
 
-option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-    info: {
-        title: "Coop Norge Interview Assignment - Coop Logistics API"
-        version: "1.0.0"
-        description: "Coop Logistics Engine, simulates several cargo units that deliver cargo between different storages in the world in other words generating events."
-    }
-};
-
 // CoopLogisticsEngineAPI
 service CoopLogisticsEngineAPI {
     // MoveUnit request will be send when unit moves in dimensions to new location.
