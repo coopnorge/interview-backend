@@ -3,19 +3,19 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/coopnorge/interview-backend/internal/app/logistics/api
+    default: github.com/coopnorge/interview-backend/src/generated/logistics/api
     except:
       - buf.build/googleapis/googleapis
       - buf.build/grpc-ecosystem/grpc-gateway
       - buf.build/grpc/grpc
 plugins:
   - name: go
-    out: internal/app/logistics/api/
+    out: src/generated/logistics/api
     opt:
       - paths=import
-      - module=github.com/coopnorge/interview-backend/internal/app/logistics/api
+      - module=github.com/coopnorge/interview-backend/src/generated/logistics/api
   - name: go-grpc
-    out: internal/app/logistics/api/
+    out: src/generated/logistics/api
     opt:
       - paths=import
-      - module=github.com/coopnorge/interview-backend/internal/app/logistics/api
+      - module=github.com/coopnorge/interview-backend/src/generated/logistics/api

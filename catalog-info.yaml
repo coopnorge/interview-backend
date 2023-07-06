@@ -2,7 +2,9 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: interview-backend
-  description: "Candidate interview assignment for an Software Engineer"
+  description: |
+    Candidate interview assignment for an Software Engineer, can be implemented
+    in any language that supports gRPC and tweaked.
   tags:
     - "go"
     - "gRPC"
@@ -15,3 +17,6 @@ spec:
   type: library
   lifecycle: experimental
   owner: engineering
+  dependsOn:
+    - component:techdocs
+    - component:vale-coop

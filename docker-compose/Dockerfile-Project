@@ -8,13 +8,15 @@ ENV CLIENT_SERVICE_PORT 50051
 
 RUN apt-get update && apt-get install -y iputils-ping telnet
 
-WORKDIR /go/src/app
+WORKDIR /opt/app
+
 COPY . .
 
+WORKDIR /opt/app/src/client
+
 RUN go mod download
-RUN ls -laht
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-    go build -a -v -o "/go/src/app/${APP_MAIN_ENTRY_PATH}/${APP_BINARY_NAME}" "./${APP_MAIN_ENTRY_PATH}"
+    go build -a -v -o "${APP_MAIN_ENTRY_PATH}/${APP_BINARY_NAME}" "./${APP_MAIN_ENTRY_PATH}"
 
 EXPOSE $CLIENT_SERVICE_PORT
 
