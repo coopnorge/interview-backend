@@ -8,7 +8,7 @@ require (
 	github.com/brianvoe/gofakeit/v6 v6.22.0
 	github.com/coopnorge/interview-backend/src/generated v0.0.0-00010101000000-000000000000
 	github.com/google/wire v0.5.0
-	google.golang.org/grpc v1.56.1
+	google.golang.org/grpc v1.56.3
 )
 
 require (
