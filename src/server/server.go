@@ -21,7 +21,7 @@ func NewGRPCLogisticServer(service client.CoopLogisticsEngineAPIClient) *GRPCLog
 	}
 }
 
-func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *client.MoveUnitRequest) (any, error) {
+func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *client.MoveUnitRequest) (*DefaultResponse, error) {
 	resp, err := s.service.MoveUnit(ctx, req)
 	if err != nil {
 		return nil, err
@@ -34,7 +34,7 @@ func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *client.MoveUnitR
 func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *client.UnitReachedWarehouseRequest) (any, error) {
 	resp, err := s.service.UnitReachedWarehouse(ctx, req)
 	if err != nil {
-		return nierr
+		return nil, err
 	}
 
 	os.Stdout.Write(resp)
