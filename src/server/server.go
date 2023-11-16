@@ -28,7 +28,7 @@ func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *serverApi.MoveUn
 	}
 
 	os.Stdout.Write(resp)
-	return &resp, nil
+	return resp, nil
 }
 
 func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *serverApi.UnitReachedWarehouseRequest) (*serverApi.DefaultResponse, error) {
@@ -37,8 +37,8 @@ func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *serv
 		return nil, err
 	}
 
-	os.Stdout.Write(resp)
-	return &resp, nil
+	os.Stdout.Write(string(resp))
+	return resp, nil
 }
 
 func RunGRPCServer(listenAddr string, service serverApi.CoopLogisticsEngineAPIClient) error {
