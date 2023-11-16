@@ -12,7 +12,7 @@ import (
 )
 
 type GRPCLogisticServer struct {
-	service client.CoopLogisticsEngineAPIClient
+	service serverApi.CoopLogisticsEngineAPIClient
 }
 
 func NewGRPCLogisticServer(service client.CoopLogisticsEngineAPIClient) *GRPCLogisticServer {
@@ -21,7 +21,7 @@ func NewGRPCLogisticServer(service client.CoopLogisticsEngineAPIClient) *GRPCLog
 	}
 }
 
-func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *client.MoveUnitRequest) (*DefaultResponse, error) {
+func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *serverApi.MoveUnitRequest) (any, error) {
 	resp, err := s.service.MoveUnit(ctx, req)
 	if err != nil {
 		return nil, err
@@ -31,7 +31,7 @@ func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *client.MoveUnitR
 	return &resp, nil
 }
 
-func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *client.UnitReachedWarehouseRequest) (any, error) {
+func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *serverApi.UnitReachedWarehouseRequest) (any, error) {
 	resp, err := s.service.UnitReachedWarehouse(ctx, req)
 	if err != nil {
 		return nil, err
@@ -49,9 +49,9 @@ func RunGRPCServer(listenAddr string, service client.CoopLogisticsEngineAPIClien
 		return err
 	}
 
-	opts := []gprc.ServerOptions{}
+	opts := []grpc.ServerOption{}
 	server := grpc.NewServer(opts...)
 	serverApi.RegisterCoopLogisticsEngineAPIServer(server, GRPCLogisticServer)
-	return server.serve(listener)
+	return server.Serve(listener)
 
 }
