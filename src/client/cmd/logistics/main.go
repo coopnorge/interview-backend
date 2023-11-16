@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/coopnorge/interview-backend/src/client/internal/app/logistics/config"
+	"github.com/coopnorge/interview-backend/src/server"
 )
 
 func main() {
@@ -22,4 +23,7 @@ func main() {
 	if e := app.Run(); e != nil {
 		panic(e)
 	}
+
+	svc := &CoopLogisticsEngineAPIClient{}
+	go server.RunGRPCServer(":50051", svc)
 }

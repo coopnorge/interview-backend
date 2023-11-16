@@ -2,13 +2,13 @@ package server
 
 import (
 	"context"
-	"log"
 	"net"
 	"os"
 
 	"google.golang.org/grpc"
 
 	client "github.com/coopnorge/interview-backend/src/generated/logistics/api/v1"
+	serverApi "github.com/coopnorge/interview-backend/src/server/generated/proto"
 )
 
 type GRPCLogisticServer struct {
@@ -27,8 +27,7 @@ func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *client.MoveUnitR
 		return err
 	}
 
-	log := log.New(os.Stdout)
-	log.Printf("Message %s", resp)
+	os.Stdout.Write(resp)
 	return nil
 }
 
@@ -38,8 +37,7 @@ func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *clie
 		return err
 	}
 
-	log := log.New(os.Stdout)
-	log.Printf("Message %s", resp)
+	os.Stdout.Write(resp)
 	return nil
 }
 
@@ -53,8 +51,7 @@ func RunGRPCServer(listenAddr string, service client.CoopLogisticsEngineAPIClien
 
 	opts := []gprc.ServerOptions{}
 	server := grpc.NewServer(opts...)
-	apiv1.RegisterCoopLogisticsEngineAPIServer(server, GRPCLogisticServer)
-
+	serverApi.RegisterCoopLogisticsEngineAPIServer(server, GRPCLogisticServer)
 	return server.serve(listener)
 
 }
