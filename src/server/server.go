@@ -27,7 +27,7 @@ func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *serverApi.MoveUn
 		return nil, err
 	}
 
-	os.Stdout.Write(resp)
+	os.Stdout.Write(string(resp))
 	return resp, nil
 }
 
