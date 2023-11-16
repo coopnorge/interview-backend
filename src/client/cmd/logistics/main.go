@@ -24,6 +24,6 @@ func main() {
 		panic(e)
 	}
 
-	svc := &CoopLogisticsEngineAPIClient{}
+	svc := &coopLogisticsEngineAPIClient{}
 	go server.RunGRPCServer(":50051", svc)
 }

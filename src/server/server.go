@@ -2,8 +2,8 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"net"
-	"os"
 
 	"google.golang.org/grpc"
 
@@ -26,8 +26,7 @@ func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *serverApi.MoveUn
 	if err != nil {
 		return nil, err
 	}
-
-	os.Stdout.Write(string(resp))
+	fmt.Println(req.CargoUnitId)
 	return resp, nil
 }
 
@@ -37,7 +36,6 @@ func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *serv
 		return nil, err
 	}
 
-	os.Stdout.Write(string(resp))
 	return resp, nil
 }
 
