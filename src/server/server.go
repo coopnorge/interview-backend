@@ -7,7 +7,6 @@ import (
 
 	"google.golang.org/grpc"
 
-	client "github.com/coopnorge/interview-backend/src/generated/logistics/api/v1"
 	serverApi "github.com/coopnorge/interview-backend/src/server/generated/proto"
 )
 
@@ -15,7 +14,7 @@ type GRPCLogisticServer struct {
 	service serverApi.CoopLogisticsEngineAPIClient
 }
 
-func NewGRPCLogisticServer(service client.CoopLogisticsEngineAPIClient) *GRPCLogisticServer {
+func NewGRPCLogisticServer(service serverApi.CoopLogisticsEngineAPIClient) *GRPCLogisticServer {
 	return &GRPCLogisticServer{
 		service: service,
 	}
@@ -41,7 +40,7 @@ func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *serv
 	return &resp, nil
 }
 
-func RunGRPCServer(listenAddr string, service client.CoopLogisticsEngineAPIClient) error {
+func RunGRPCServer(listenAddr string, service serverApi.CoopLogisticsEngineAPIClient) error {
 	GRPCLogisticServer := NewGRPCLogisticServer(service)
 
 	listener, err := net.Listen("tcp", listenAddr)
