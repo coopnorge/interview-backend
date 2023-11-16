@@ -12,7 +12,7 @@ import (
 
 type GRPCLogisticServer struct {
 	service serverApi.CoopLogisticsEngineAPIClient
-	serverApi.UnimplementedPriceFetcherServer
+	serverApi.mustEmbedUnimplementedCoopLogisticsEngineAPIServer
 }
 
 func NewGRPCLogisticServer(service serverApi.CoopLogisticsEngineAPIClient) *GRPCLogisticServer {
