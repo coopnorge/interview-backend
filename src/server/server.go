@@ -7,20 +7,22 @@ import (
 	"os"
 
 	"google.golang.org/grpc"
+
+	client "github.com/coopnorge/interview-backend/src/generated/logistics/api/v1"
 )
 
 type GRPCLogisticServer struct {
-	service apiv1.CoopLogisticsEngineAPIClient
+	service client.CoopLogisticsEngineAPIClient
 }
 
-func NewGRPCLogisticServer(service apiv1.CoopLogisticsEngineAPIClient) *GRPCLogisticServer {
+func NewGRPCLogisticServer(service client.CoopLogisticsEngineAPIClient) *GRPCLogisticServer {
 	return &GRPCLogisticServer{
 		service: service,
 	}
 }
 
-func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *apiv1.MoveUnitRequest) error {
-	resp, err := s.svc.APILogisticsClient.MoveUnit(ctx, req)
+func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *client.MoveUnitRequest) error {
+	resp, err := s.service.MoveUnit(ctx, req)
 	if err != nil {
 		return err
 	}
@@ -30,8 +32,8 @@ func (s *GRPCLogisticServer) MoveUnit(ctx context.Context, req *apiv1.MoveUnitRe
 	return nil
 }
 
-func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *apiv1.UnitReachedWarehouseRequest) error {
-	resp, err := s.svc.APILogisticsClient.UnitReachedWarehouse(ctx, req)
+func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *client.UnitReachedWarehouseRequest) error {
+	resp, err := s.service.UnitReachedWarehouse(ctx, req)
 	if err != nil {
 		return err
 	}
@@ -41,7 +43,7 @@ func (s *GRPCLogisticServer) UnitReachedWarehouse(ctx context.Context, req *apiv
 	return nil
 }
 
-func RunGRPCServer(listenAddr string, service apiv1.CoopLogisticsEngineAPIClient) error {
+func RunGRPCServer(listenAddr string, service client.CoopLogisticsEngineAPIClient) error {
 	GRPCLogisticServer := NewGRPCLogisticServer(service)
 
 	listener, err := net.Listen("tcp", listenAddr)
