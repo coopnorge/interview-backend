@@ -15,7 +15,7 @@ deliver goods between different warehouses in the world.
 
 It sends `gRPC` requests to `127.0.0.1:50051` (can be redefined),
 look at service in
-[docker-compose](../docker-compose.yml) "interview_backend_coop_logistics_client"
+[docker-compose](../docker-compose.yaml) "interview_backend_coop_logistics_client"
 
 ## Assignment
 

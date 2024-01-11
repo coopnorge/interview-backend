@@ -39,7 +39,7 @@ The test assignment for a Software Engineer
 │       └── logistics.proto   // API definition that used in this test assignment
 ├── buf.*.yaml                // Files that used by "Buf" to managed generated code from Protobuf
 ├── catalog-info.yaml         // Internal Coop configuration of project, you can ignore it
-└── docker-compose.yml        // As part of assignment to running multi-container Docker applications (Client and Server APIs)
+└── docker-compose.yaml        // As part of assignment to running multi-container Docker applications (Client and Server APIs)
 ```
 
 ## Example of client program output:
