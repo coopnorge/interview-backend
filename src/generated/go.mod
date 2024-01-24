@@ -1,6 +1,6 @@
 module github.com/coopnorge/interview-backend/src/generated
 
-go 1.20
+go 1.21
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.16.0
