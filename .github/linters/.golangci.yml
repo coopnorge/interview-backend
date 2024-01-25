@@ -1,16 +1,14 @@
 run:
   timeout: 5m
-  go: '1.20'
+  go: "1.21"
   tests: false
   skip-dirs-use-default: true
   skip-dirs:
     - vendor
     - api/v1
     - internal/app/logistics/api/v1
-
 output:
   sort-results: true
-
 linters-settings:
   errcheck:
     check-blank: true
@@ -20,6 +18,5 @@ linters-settings:
     min-complexity: 15
   maligned:
     suggest-new: true
-
 linters:
   fast: true

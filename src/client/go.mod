@@ -1,6 +1,6 @@
 module github.com/coopnorge/interview-backend/src/client
 
-go 1.20
+go 1.21
 
 replace github.com/coopnorge/interview-backend/src/generated => ../generated
 
