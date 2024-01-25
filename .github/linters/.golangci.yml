@@ -1,6 +1,6 @@
 run:
   timeout: 5m
-  go: '1.21'
+  go: "1.21"
   tests: false
   skip-dirs-use-default: true
   skip-dirs:
