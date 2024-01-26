@@ -9,7 +9,7 @@ jobs:
       run-techdocs-ci: ${{ steps.changes.outputs.techdocs == 'true' && github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@v3
         id: changes
         with:
           list-files: json
