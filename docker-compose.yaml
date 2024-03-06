@@ -7,11 +7,15 @@ services:
   interview_backend_coop_logistics_client:
     build:
       context: .
-      dockerfile: docker-compose/Dockerfile-Project
+      dockerfile: devtools/Dockerfile-Project
     container_name: interview_backend_coop_logistics_client
     environment:
-      - CLIENT_SERVICE_PORT=50051
-      - CLIENT_SERVICE_HOST=interview_backend_coop_logistics_server
+      - CLIENT_SERVICE_HOST="0.0.0.0"
+      - CLIENT_SERVICE_PORT="50051"
+      # Supported transports: "gRPC" or "HTTP"
+      - CLIENT_TRANSPORT_TYPE="gRPC"
+      # Used for HTTP protocol: "https" or "http"
+      - CLIENT_HTTP_SCHEME="http"
     networks:
       - coop-norge-interview-network
   # Coop internal documentation

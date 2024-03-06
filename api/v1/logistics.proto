@@ -15,14 +15,12 @@ service CoopLogisticsEngineAPI {
     rpc MoveUnit(MoveUnitRequest) returns (DefaultResponse) {
         option (google.api.http) = {
             post: "/v1/cargo_unit/move"
-            body: "*"
         };
     }
     // UnitReachedWarehouse reports when unit reached warehouse to do something there.
     rpc UnitReachedWarehouse(UnitReachedWarehouseRequest) returns (DefaultResponse) {
         option (google.api.http) = {
             post: "/v1/warehouse/cargo_unit/reached"
-            body: "*"
         };
     }
 }

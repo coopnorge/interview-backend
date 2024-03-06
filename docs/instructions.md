@@ -6,16 +6,34 @@ with specific business logic.**
 ## Acceptance Criteria
 
 - All three parts must be done.
-- API must be capable of handling all requests sent by this client without dropping them.
+- API Server must be capable of handling all requests sent by this client
+  without dropping them.
+- API Server - code design must be flexible for introducing new features.
 
 ## Assignment Appendix
 
-Coop Logistics Engine simulates several cargo units that
-deliver goods between different warehouses in the world.
+Coop Logistics Engine simulates client activity about several cargo units that
+deliver goods between different warehouses in the world. All this activity will
+be reported as request to your API server.
 
-It sends `gRPC` requests to `127.0.0.1:50051` (can be redefined),
-look at service in
-[docker-compose](../docker-compose.yaml) "interview_backend_coop_logistics_client"
+For example
+It sends `gRPC` or `HTTP` requests to `127.0.0.1:50051`.
+
+You can use `env` variables to redefine values for configuration.
+
+| ENV                   | Description                                                   |
+|-----------------------|---------------------------------------------------------------|
+| CLIENT_SERVICE_HOST   | Base host like 127.0.0.1                                      |
+| CLIENT_SERVICE_PORT   | Server port like 50051, 8080                                  |
+| CLIENT_TRANSPORT_TYPE | Protocol that client will use to send requests (gRPC or HTTP) |
+| CLIENT_HTTP_SCHEME    | HTTP Scheme (http or https) if CLIENT_TRANSPORT_TYPE is HTTP  |
+
+For reference, you can copy template
+of [docker-compose](../docker-compose.yaml) "interview_backend_client" and
+configure you `API server`.
+
+If you are willing to compile it locally and execute client imitation, then
+look for `cmd/logistics` where `main.go` is located.
 
 ## Assignment
 
@@ -29,32 +47,46 @@ ___
 
 ### Part One: Implement Backend API
 
-Implement an API sever that provides the following service over gRPC:
-[proto-file](../api/v1/logistics.proto).
+Implement an API sever that provides the following service.
 
-- The solution should output a log message to STDOUT
-once per second with the number of received messages per second.
+- If you know gRPC: [proto-file](../api/v1/logistics.proto)
+- Alternative HTTP: [swagger-file](../api/v1/logistics.swagger.json)
+
+> ! The solution must continuously output a log message to STDOUT every second.
+> Each log message should include the total number of messages received during
+> that second.
 
 ### Part Two: Store Delivery Units
 
-The cargo units run between the different warehouses in the world.
+In this part of the assignment, you are tasked with tracking cargo units as
+they are transported between various warehouses around the world. You will be
+capturing this delivery path information through the API you developed in Part
+One.
 
-Your task is to store these delivery paths,
-data comes into the API you implemented in *Part One*.
-Write at least one unit test that verifies that your solution works.
+Your objectives are to:
 
+1. Implement storage for these delivery paths, with incoming data processed by
+   your API.
+2. Write at least one unit test to verify the functionality of your solution.
+3. Your API Server (solution) must include the following outputs:
 
-The solution should:
-- Output a log message to STDOUT once per second
-  with the number of received messages per second.
-- Output summary
-  - Total delivery units.
-  - Warehouses that has been supplied (units reached destination).
-  - How many delivery units have warehouses.
+- Periodic Logging: Every second, output a log message to STDOUT that displays
+  the count of messages received during that second.
+- Summary Output: Provide a summary that includes:
+  - The total number of delivery units.
+  - A list of warehouses that have received supplies (i.e., units that have
+    reached their destination).
+  - The quantity of delivery units each warehouse has received.
 
 ### Part Three: Export Delivery Paths
 
-Given the delivery paths stored in *Part Two*.
+Building on the delivery paths data stored in Part Two, your task is now to
+implement an API endpoint. This endpoint should be capable of exporting data
+concerning the warehouses and their suppliers.
 
-Implement an API endpoint that can export data about warehouses and it's
-suppliers.
+Specifically, the API endpoint should:
+
+- Retrieve and format data about each warehouse, including information about
+  its suppliers.
+- Ensure the data is structured in a way that clearly identifies the
+  relationship between warehouses and the suppliers that deliver to them.
