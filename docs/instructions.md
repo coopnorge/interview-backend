@@ -52,9 +52,9 @@ Implement an API sever that provides the following service.
 - If you know gRPC: [proto-file](../api/v1/logistics.proto)
 - Alternative HTTP: [swagger-file](../api/v1/logistics.swagger.json)
 
-> ! The solution must continuously output a log message to STDOUT every second.
-> Each log message should include the total number of messages received during
-> that second.
+**! The solution must continuously output a log message to STDOUT every second.
+Each log message should include the total number of messages received during
+that second.**
 
 ### Part Two: Store Delivery Units
 

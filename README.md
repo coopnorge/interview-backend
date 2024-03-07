@@ -1,15 +1,15 @@
 # Interview Assignment - Coop Logistics API
 
-> This repository hosts the source code for a client designed to generate a
-> specified number of requests (N).
->
-> As part of the assignment, the candidate is
-> required to develop an API server capable of handling these requests.
-> The server can be implemented using either gRPC or HTTP protocols.
-> 
-> The primary objective of this test is to assess the candidate's ability to
-> create a robust API server that efficiently processes incoming requests as
-> specified by the client's operations
+**This repository hosts the source code for a client designed to generate a
+specified number of requests (N).**
+
+**As part of the assignment, the candidate is
+required to develop an API server capable of handling these requests.
+The server can be implemented using either gRPC or HTTP protocols.**
+
+**The primary objective of this test is to assess the candidate's ability to
+create a robust API server that efficiently processes incoming requests as
+specified by the client's operations**
 
 Before jump in some usefully links:
 
