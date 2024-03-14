@@ -1,0 +1,196 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "v1/logistics.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "CoopLogisticsEngineAPI"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/cargo_unit/move": {
+      "post": {
+        "summary": "MoveUnit request will be send when unit moves in dimensions to new location.",
+        "operationId": "CoopLogisticsEngineAPI_MoveUnit",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DefaultResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "cargoUnitId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "location.Latitude",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "location.Longitude",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "CoopLogisticsEngineAPI"
+        ]
+      }
+    },
+    "/v1/warehouse/cargo_unit/reached": {
+      "post": {
+        "summary": "UnitReachedWarehouse reports when unit reached warehouse to do something there.",
+        "operationId": "CoopLogisticsEngineAPI_UnitReachedWarehouse",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DefaultResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "location.Latitude",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "location.Longitude",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "announcement.cargoUnitId",
+            "description": "cargo_unit_id is unique id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "announcement.warehouseId",
+            "description": "warehouse_id is unique id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "announcement.message",
+            "description": "the message contains information about the announcement",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "CoopLogisticsEngineAPI"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "apiv1Location": {
+      "type": "object",
+      "properties": {
+        "Latitude": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Longitude": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "Location where entity now located in X,Y Axis"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1DefaultResponse": {
+      "type": "object",
+      "title": "DefaultResponse"
+    },
+    "v1WarehouseAnnouncement": {
+      "type": "object",
+      "properties": {
+        "cargoUnitId": {
+          "type": "string",
+          "format": "int64",
+          "title": "cargo_unit_id is unique id"
+        },
+        "warehouseId": {
+          "type": "string",
+          "format": "int64",
+          "title": "warehouse_id is unique id"
+        },
+        "message": {
+          "type": "string",
+          "title": "the message contains information about the announcement"
+        }
+      },
+      "title": "WarehouseAnnouncement"
+    }
+  }
+}
