@@ -1,19 +1,19 @@
----
-# reference https://github.com/coopnorge/cloud-platform-apis/blob/main/cloud-platform-apis/templates/repositoryconfig.github.coop.no/definition.yaml
-# status of this repository: https://argocd.internal.coop/applications?search=pallet-go-retry-lib&showFavorites=false&proj=&sync=&autoSync=&health=&namespace=&cluster=&labels=
- apiVersion: github.coop.no/v1alpha1
- kind: RepositoryConfig
- metadata:
-   name: repository-config
- spec:
-   description: Candidate assignment for an Software Engineer
-   archiveOnDestroy: true
-   branches:
-     default: main
-     protection:
-     - id: main
-       pattern: main
-       requiredStatusChecks:
-         checks:
-         - "Setup"
-         - "policy-bot: main"
+#---
+## reference https://github.com/coopnorge/cloud-platform-apis/blob/main/cloud-platform-apis/templates/repositoryconfig.github.coop.no/definition.yaml
+## status of this repository: https://argocd.internal.coop/applications?search=pallet-go-retry-lib&showFavorites=false&proj=&sync=&autoSync=&health=&namespace=&cluster=&labels=
+# apiVersion: github.coop.no/v1alpha1
+# kind: RepositoryConfig
+# metadata:
+#   name: repository-config
+# spec:
+#   description: Candidate assignment for an Software Engineer
+#   archiveOnDestroy: true
+#   branches:
+#     default: main
+#     protection:
+#     - id: main
+#       pattern: main
+#       requiredStatusChecks:
+#         checks:
+#         - "Setup"
+#         - "policy-bot: main"
